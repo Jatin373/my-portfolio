@@ -135,10 +135,61 @@ section {
     color: var(--accent);
 }
 
-/* Contact */
-.contact a {
-    display: block;
+/* Contact Form */
+form {
+    max-width: 500px;
+    margin-top: 30px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #2a2f3a;
+    background: var(--card);
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: var(--accent);
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+#formMessage {
     margin-top: 10px;
+    font-size: 0.85rem;
+}
+
+.contact-links {
+    margin-top: 30px;
+}
+
+.contact-links a {
+    display: block;
+    margin-top: 8px;
     color: var(--accent);
     text-decoration: none;
 }
@@ -181,9 +232,9 @@ footer {
 <section class="hero" id="about">
     <h2>Hi, I'm <span>Jatin Agrawal</span></h2>
     <p>
-        Frontend Developer & Java Enthusiast passionate about building fast, 
-        responsive, and user-friendly web applications. 
-        I focus on clean design, efficient code, and continuous learning.
+        Frontend Developer & Java Enthusiast passionate about building fast,
+        responsive, and user-friendly web applications.
+        I focus on clean UI design and performance.
     </p>
 </section>
 
@@ -194,8 +245,8 @@ footer {
         <div class="skill">CSS3</div>
         <div class="skill">JavaScript</div>
         <div class="skill">Java</div>
-        <div class="skill">Bootstrap</div>
         <div class="skill">SQL</div>
+        <div class="skill">Bootstrap</div>
         <div class="skill">Git & GitHub</div>
         <div class="skill">Responsive Design</div>
     </div>
@@ -206,42 +257,49 @@ footer {
 
     <div class="card">
         <h3>Library Management System</h3>
-        <p>
-            Full-stack PHP-based library system with Admin and Student panels.
-            Features book management, issue/return tracking, and authentication.
-        </p>
-        <small>Tech: PHP, MySQL, HTML, CSS</small><br>
-        <a href="#" target="_blank" style="color:var(--accent)">View Project</a>
+        <p>Full-stack PHP system with Admin & Student panel.</p>
+        <small>Tech: PHP, MySQL, HTML, CSS</small>
     </div>
 
     <div class="card">
         <h3>WearKick E-commerce Website</h3>
-        <p>
-            Modern responsive e-commerce frontend with product listing,
-            registration page, and clean UI design.
-        </p>
-        <small>Tech: HTML, CSS, Bootstrap, JavaScript</small><br>
-        <a href="#" target="_blank" style="color:var(--accent)">View Project</a>
+        <p>Modern responsive e-commerce frontend.</p>
+        <small>Tech: HTML, CSS, JavaScript</small>
     </div>
 
     <div class="card">
-        <h3>Portfolio Website</h3>
-        <p>
-            Personal portfolio built with pure HTML, CSS, and JavaScript.
-            Designed for performance and smooth animations.
-        </p>
-        <small>Tech: HTML, CSS, JavaScript</small><br>
-        <a href="#" target="_blank" style="color:var(--accent)">View Code</a>
+        <h3>Personal Portfolio</h3>
+        <p>Fast, responsive personal website built without frameworks.</p>
+        <small>Tech: HTML, CSS, JavaScript</small>
     </div>
-
 </section>
 
-<section id="contact" class="contact">
+<section id="contact">
     <h2>Contact Me</h2>
-    <p>Let's work together or just say hi 👋</p>
-    <a href="mailto:jatin@email.com">📧 jatin@email.com</a>
-    <a href="https://github.com/yourusername" target="_blank">💻 GitHub</a>
-    <a href="https://linkedin.com/in/yourusername" target="_blank">🔗 LinkedIn</a>
+    <p>Have a project in mind? Let's connect.</p>
+
+    <form id="contactForm">
+        <div class="form-group">
+            <input type="text" id="name" placeholder="Your Name" required>
+        </div>
+
+        <div class="form-group">
+            <input type="email" id="email" placeholder="Your Email" required>
+        </div>
+
+        <div class="form-group">
+            <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+        </div>
+
+        <button type="submit">Send Message</button>
+        <p id="formMessage"></p>
+    </form>
+
+    <div class="contact-links">
+        <a href="mailto:jatin@email.com">📧 jatin@email.com</a>
+        <a href="#">💻 GitHub</a>
+        <a href="#">🔗 LinkedIn</a>
+    </div>
 </section>
 
 <footer>
@@ -251,7 +309,6 @@ footer {
 <script>
 // Scroll Animation
 const cards = document.querySelectorAll('.card');
-
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         if(entry.isIntersecting){
@@ -260,8 +317,28 @@ const observer = new IntersectionObserver(entries => {
     });
 }, { threshold: 0.2 });
 
-cards.forEach(card => {
-    observer.observe(card);
+cards.forEach(card => observer.observe(card));
+
+// Contact Form
+const form = document.getElementById("contactForm");
+const formMessage = document.getElementById("formMessage");
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    if(name === "" || email === "" || message === "") {
+        formMessage.style.color = "red";
+        formMessage.textContent = "Please fill in all fields.";
+        return;
+    }
+
+    formMessage.style.color = "var(--accent)";
+    formMessage.textContent = "Message sent successfully! (Demo Mode)";
+    form.reset();
 });
 </script>
 
